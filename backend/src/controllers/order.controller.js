@@ -62,12 +62,13 @@ exports.getOrderById = async (req, res, next) => {
     }
 
     // Ownership check
-    if (order.user.toString() !== req.user.id) {
+    if (!order.user.equals(req.user.id)) {
       return res.status(403).json({
         success: false,
         message: "Not authorized to access this order",
       });
     }
+
 
     res.status(200).json({
       success: true,
@@ -95,12 +96,13 @@ exports.updateOrder = async (req, res, next) => {
     }
 
     // Ownership check
-    if (order.user.toString() !== req.user.id) {
+    if (!order.user.equals(req.user.id)) {
       return res.status(403).json({
         success: false,
         message: "Not authorized to update this order",
       });
     }
+
 
     if (productName) order.productName = productName;
     if (price) order.price = price;
@@ -132,7 +134,7 @@ exports.deleteOrder = async (req, res, next) => {
     }
 
     // Ownership check
-    if (order.user.toString() !== req.user.id) {
+    if (!order.user.equals(req.user.id)) {
       return res.status(403).json({
         success: false,
         message: "Not authorized to delete this order",
